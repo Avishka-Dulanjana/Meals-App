@@ -9,4 +9,6 @@ A new Flutter project.
 ### Event Listeners 
 
 - InkWell - ***Have Visual Feedback***
-- GestureDetector - ***Don't have any visual feedback*** 
+- GestureDetector - ***Don't have any visual feedback***
+- Transparent Image - ***https://pub.dev/packages/transparent_image***
+- FadeInImage - ***Need Transparent Image dependency***
