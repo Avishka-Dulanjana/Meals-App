@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/models/meal.dart';
+import 'package:meals_app/widgets/meal_item_trait.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class MealItem extends StatelessWidget {
   const MealItem({
     super.key,
     required this.meal,
+    required this.onSelectMeal,
   });
 
   final Meal meal;
+  final void Function(BuildContext context, Meal meal) onSelectMeal;
+
+  String get complexityText {
+    return meal.complexity.name[0].toUpperCase() +
+        meal.complexity.name.substring(1);
+  }
+
+  String get affordabilityText {
+    return meal.affordability.name[0].toUpperCase() +
+        meal.affordability.name.substring(1);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +32,9 @@ class MealItem extends StatelessWidget {
           .hardEdge, // using Stack boarder radius not shows. so need to change card radius
       elevation: 2,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          onSelectMeal(context, meal);
+        },
         child: Stack(children: [
           FadeInImage(
             placeholder: MemoryImage(kTransparentImage),
@@ -47,9 +62,31 @@ class MealItem extends StatelessWidget {
                   overflow:
                       TextOverflow.ellipsis, // Very Long Text shows as ...
                   style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(width: 12),
+                    MealItemTrait(
+                      icon: Icons.schedule,
+                      label: '${meal.duration} min',
+                    ),
+                    const SizedBox(width: 12),
+                    MealItemTrait(
+                      icon: Icons.work,
+                      label: complexityText,
+                    ),
+                    const SizedBox(width: 12),
+                    MealItemTrait(
+                      icon: Icons.attach_money,
+                      label: affordabilityText,
+                    ),
+                  ],
                 )
               ]),
             ),
